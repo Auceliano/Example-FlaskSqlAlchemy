@@ -1,0 +1,170 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/theme.css" type="text/css"> 
+  <link rel="stylesheet" href="/static/css/techstore.css" type="text/css"> 
+
+  {% if estilo %}
+    <link rel="stylesheet" href="/static/css/{{estilo}}.css" type="text/css">
+  {% endif %}
+
+  </head>
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-light bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="#">TechStore</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{url_for('homepage')}}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Produtos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Sobre</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" action="#" method="GET">
+          <input name="busca" class="form-control mr-sm-2" type="text" placeholder="Produto">
+          <button class="btn btn-info my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <div class="py-5 text-center">
+  
+    <div class="container">
+      {% block conteudo %}
+      {% endblock %}
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card my-1">
+            <div class="card-block text-center">
+              <h2>Básico</h2>
+              <h3>R$ 876,54</h3>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Até 10 vezes no carnê!</li>
+              <li class="list-group-item">2 GB RAM</li>
+              <li class="list-group-item">4 GB HDD</li>
+            </ul>
+            <div class="card-block">
+              <a href="#" class="btn btn-block btn-primary">Subscribe</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card ">
+            <div class="bg-primary card-block">
+              <h1 class="card-title text-white">Normal</h1>
+              <h2 class="text-white">R$ 1000,54</h2>
+            </div>
+            <ul class="list-group list-group-flush ">
+              <li class="list-group-item">Até 10 vezes no carnê!</li>
+              <li class="list-group-item">4 GB</li>
+              <li class="list-group-item">1 TB</li>
+            </ul>
+            <div class="card-block ">
+              <a href="#" class="btn btn-block btn-lg btn-primary">Comprar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card my-1">
+            <div class="card-block text-xs-center">
+              <h2 class="card-title">Avançado</h2>
+              <h3 class="">R$ 3500,00</h3>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Até 10 vezes no carnê!</li>
+              <li class="list-group-item">32 GB</li>
+              <li class="list-group-item">5 TB</li>
+            </ul>
+            <div class="card-block ">
+              <a href="#" class="btn btn-block btn-primary">Comprar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-5 text-center bg-primary">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <img src="/static/img/pc.jpg" class="d-block mx-auto img-thumbnail img-fluid my-3 techstore-advertisement--img">
+          <h3>Computadores</h3>
+          <p>Os melhores produtos!</p>
+        </div>
+        <div class="col-md-4">
+          <img src="/static/img/nobo.jpg" class="d-block mx-auto img-thumbnail img-fluid my-3 techstore-advertisement--img">
+          <h3>Notebooks</h3>
+          <p>Os melhores produtos!</p>
+        </div>
+        <div class="col-md-4">
+          <img src="/static/img/ace.jpg" class="d-block mx-auto img-thumbnail img-fluid my-3 techstore-advertisement--img">
+          <h3>Acessórios</h3>
+          <p>Os melhores produtos!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-5 bg-inverse text-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h1 class=" pi-item">TECH STORE</h1>
+          <p><strong>Tech Store, Inc.</strong>
+            <br>Rua X, Sala Y
+            <br>Aracati, BR 12345-098
+        </div>
+        <div class="col-md-6">
+          <h1 class="pi-item">CONTATO</h1>
+          <form action="#" method="POST">
+            <fieldset class="form-group"> <label for="nome">Nome:</label>
+              <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome"> </fieldset>
+            <fieldset class="form-group"> <label for="email">Endereço</label>
+              <input type="email" class="form-control" name="email" id="email" placeholder="E-mail">
+              </fieldset>
+              <input type="checkbox" 
+                      name="notificar_me" 
+                      value="" checked>Notificar me</input>
+            <fieldset class="form-group">
+              <input type="radio" name="prof" value="Professor">Professor</input>
+              <input type="radio" name="prof" value="Estudante">Estudante</input>
+            </fieldset>
+            <fieldset class="form-group">
+            <label for="mensagem">Mensagem</label>
+              <textarea name="mensagem" cols="50" rows="5">{{message}}</textarea>
+            </fieldset>
+            <fieldset class="form-group">
+            <select name="tipo">
+              {% for tipo in tipos %}
+                <option value="{{tipo.cod}}">{{tipo.info}}</option>
+              {% endfor %}
+            </select>
+            </fieldset>
+            <fieldset class="form-group">
+              <button type="submit" class="btn btn-success">Submit</button>
+            </fieldset>
+              }
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/static/js/jquery-3.1.1.min.js"></script>
+  <script src="/static/js/tether.min.js"></script>
+  <script src="/static/js/bootstrap-4.0.0-alpha.6.min.js"></script>
+</body>
+
+</html>
