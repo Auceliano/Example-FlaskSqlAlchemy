@@ -8,7 +8,18 @@ def vincular_user_adress(user_id, adress_id):
 	if user and adress is not None:
 		user.endereco = adress
 		db.session.commit()	
-		return True
+		return user
+	else:
+		return None
+
+def vincular_user_emprestimo(user_id, emprestimo_id):
+	user = Usuario.query.get(user_id)
+	emprestimo = Emprestimo.query.get(emprestimo_id)
+	if user and Emprestimo is not None:
+		user.emprestimo = emprestimo
+		emprestimo.id_usuario = user_id
+		db.session.commit()	
+		return user
 	else:
 		return None
 	
@@ -144,5 +155,38 @@ def obter_livro(id):
 	livro = Livro.query.get(id)
 	if livro is not None:
 		return livro
+	else:
+		return None
+
+#CRUD ENTIDADE EMPRESTIMO
+def inserir_emprestimo(data_emprestimo, data_devolucao):
+	emprestimo = Emprestimo(data_emprestimo, data_devolucao)
+	db.session.add(emprestimo)
+	db.session.commit()
+	return emprestimo
+
+def atualizar_emprestimo(id, data_emprestimo, data_devolucao):
+	emprestimo = Emprestimo.query.get(id)
+	if emprestimo is not None:
+		emprestimo.data_emprestimo = data_emprestimo
+		emprestimo.data_devolucao = data_devolucao
+		db.session.commit()
+		return emprestimo
+	else:
+		return None
+
+def deletar_emprestimo(id):
+	emprestimo = Emprestimo.query.get(id)
+	if emprestimo is not None:
+		db.session.delete(emprestimo)
+		db.session.commit()
+		return emprestimo
+	else:
+		return None
+
+def obter_emprestimo(id):
+	emprestimo = Emprestimo.query.get(id)
+	if emprestimo is not None:
+		return emprestimo
 	else:
 		return None
