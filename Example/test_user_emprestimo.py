@@ -11,7 +11,7 @@ class TestCase(unittest.TestCase):
 
 	#Testes da Entidade Usuario e Emprestimo
 	def test_vincular_user_emprestimo(self):
-		user = inserir_usuario('Desmeliedison Jerry Junior', '88 9 6969 9696', 'desmeliedison@gmail.com')
+		user = inserir_usuario('Desmeliedison Jerry Junior', '88 9 6969 9696', 'desmeliedison@gmail.com','admin', 'A')
 		emprestimo = inserir_emprestimo(datetime.date(datetime.now()), datetime.date(datetime.now().replace(2019, 9, 20, 0, 0, 0, 0)))
 		emprestimo1 = inserir_emprestimo(datetime.date(datetime.now()), datetime.date(datetime.now().replace(2020, 9, 20, 0, 0, 0, 0)))
 		emprestimo2 = inserir_emprestimo(datetime.date(datetime.now()), datetime.date(datetime.now().replace(2021, 9, 20, 0, 0, 0, 0)))

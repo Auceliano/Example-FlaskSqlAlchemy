@@ -1,4 +1,29 @@
 {% extends "layout.html" %}
 {% block conteudo %}
 
+<div id="s_gallery4" class="p-5 text-center bg-secondary pi-draggable text-white gradient-overlay">
+    <div class="container">
+      <div class="row"> </div>
+      <div class="row">
+        <div class="col-12">
+          <div id="carouselArchitecture" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li data-target="#carouselArchitecture" data-slide-to="0" class="active"><i></i></li>
+              <li data-target="#carouselArchitecture" data-slide-to="1" class=""><i></i></li>
+              <li data-target="#carouselArchitecture" data-slide-to="2" class=""><i></i></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+              <div class="carousel-item active">
+                <img class="d-block img-fluid" src="/static/img/1.jpg" data-holder-rendered="true"> </div>
+              <div class="carousel-item">
+                <img class="d-block img-fluid" src="/static/img/2.jpg" data-holder-rendered="true"> </div>
+              <div class="carousel-item">
+                <img class="d-block img-fluid" src="/static/img/3.jpg" data-holder-rendered="true"> </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 {% endblock %}

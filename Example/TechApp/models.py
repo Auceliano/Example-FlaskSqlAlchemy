@@ -2,7 +2,6 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from TechApp import db
 
-###
 class Usuario(db.Model):
     """Entidade Usuário"""
     id = db.Column(
@@ -13,7 +12,11 @@ class Usuario(db.Model):
 
     telefone = db.Column(db.String(20))
 
-    email = db.Column(db.String(50))
+    email = db.Column(db.String(50), unique = True)
+
+    senha = db.Column(db.String(100))
+
+    tipo = db.Column(db.String(1))
 
     id_endereco = db.Column(
             db.Integer,
@@ -28,11 +31,14 @@ class Usuario(db.Model):
             'Emprestimo',
             backref='usuario',
             lazy='dynamic')
+
     #Contrutor recebe os atributos nome, telefone e email.
-    def __init__(self, nome, telefone, email):
+    def __init__(self, nome, telefone, email, senha, tipo):
         self.nome = nome
         self.telefone = telefone
         self.email = email
+        self.senha = senha
+        self.tipo = tipo
         #self.id_endereco = id_endereco
 
 
@@ -52,6 +58,8 @@ class Endereco(db.Model):
         self.cep = cep
         self.cidade = cidade
         self.rua = rua
+    def __repr__(self):
+        return '{}, {} ({})'.format(self.rua, self.cidade, self.cep)
 
 
 livro_emprestimo = db.Table('livro_emprestimo',
@@ -71,6 +79,12 @@ class Emprestimo(db.Model):
         backref=db.backref(
         'emprestimo',
         lazy='dynamic'))
+    
+    def __init__(self, data_emprestimo, data_devolucao):
+        self.data_emprestimo = data_emprestimo
+        self.data_devolucao = data_devolucao
+    def __repr__(self):
+        return '{} ({})'.format(self.data_emprestimo, self.id_usuario)
 
 class Livro(db.Model):
     """Entidade Livro"""
@@ -88,11 +102,14 @@ class Livro(db.Model):
         backref=db.backref(
         'livro',
         lazy='dynamic'))
+
     sessao_id = db.Column(db.Integer, db.ForeignKey('sessao.id'))
 
     def __init__(self, titulo, autor):
         self.titulo = titulo
         self.autor = autor
+    def __repr__(self):
+        return '{} ({})'.format(self.titulo, self.autor)
 
 class Sessao(db.Model):
     """Entidade Sessão"""
@@ -107,127 +124,8 @@ class Sessao(db.Model):
     livros = db.relationship('Livro', backref='sessao',
                                 lazy='dynamic')
     def __init__(self, localizacao, descricao):
-        self.descricao = descricao
         self.localizacao = localizacao
-        
-
-
-
-
-              
-
-
-        
-
-
-###
-class Funcionario(db.Model):
-    id = db.Column(
-        db.Integer,
-        primary_key = True)
-
-    id_loja = db.Column(
-        db.Integer,
-        db.ForeignKey('loja.id'))
-
-class Loja(db.Model):
-    id = db.Column(
-        db.Integer,
-        primary_key=True)
-    titulo = db.Column(db.String(20))        
-    funcs = db.relationship(
-        'Funcionario',
-        backref='loja',
-        lazy='dynamic')
-    def __init__(self, t):
-        self.titulo = t
-
-class Pessoa(db.Model):
-    id = db.Column(
-            db.Integer,
-            primary_key = True)
-
-    id_telefone = db.Column(
-            db.Integer,
-            db.ForeignKey('telefone.id'))
-    
-    telefone = db.relationship(
-            'Telefone',
-            backref='pessoa',
-            uselist=False)
-
-class Telefone(db.Model):
-        id = db.Column(
-        db.Integer,
-        primary_key=True)
-
-matriculas = db.Table(
-    
-    'matriculas',
-    
-    db.Column('aluno_id',
-            db.Integer,
-            db.ForeignKey('aluno.id')),
-    
-    db.Column('disciplina_id',
-            db.Integer,
-            db.ForeignKey('disciplina.id')) )
-
-class Aluno(db.Model):
-    id = db.Column(
-    db.Integer,
-    primary_key = True)
-    
-    disciplinas = db.relationship(
-    
-        'Disciplina',
-    
-        secondary=matriculas,
-    
-        backref=db.backref(
-            'aluno',
-            lazy='dynamic'))
-
-class Disciplina(db.Model):
-    id = db.Column(
-        db.Integer,
-        primary_key=True)
-    
-    alunos = db.relationship(
-        'Aluno',
-        secondary=matriculas,
-        backref=db.backref(
-        'disciplina',
-        lazy='dynamic'))
-
-
-
-
-#obter_lojas = lambda: Loja.querry.all()
-def obter_lojas():
-    return Loja.query.all()
-
-def inserir_loja(titulo):
-    loja = Loja(titulo)
-    db.session.add(loja)
-    db.session.commit()
-
-def atualizar_loja(id, titulo):
-    loja = Loja.query.get(id)
-    
-    if loja is not None:
-        loja.titulo = titulo
-        db.session.commit()
-    else:
-        raise Exception ("Loja nao existe!")
-
-def remover_loja(id):
-    loja = Loja.query.get(id)
-    
-    if loja is not None:
-        db.session.delete(loja)
-        db.session.commit()
-        return True
-    else:
-        return False
+        self.descricao = descricao        
+    def __repr__(self):
+        return '{} ({})'.format(self.localizacao, self.descricao)
         

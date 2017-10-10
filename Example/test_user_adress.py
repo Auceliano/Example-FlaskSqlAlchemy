@@ -11,7 +11,7 @@ class TestCase(unittest.TestCase):
 
 	#Testes da Entidade Usuario e Endereço
 	def test_vincular_user_adress(self):
-		user = inserir_usuario('Desmeliedison Jerry Junior', '88 9 6969 9696', 'desmeliedison@gmail.com')
+		user = inserir_usuario('Desmeliedison Jerry Junior', '88 9 6969 9696', 'desmeliedison@gmail.com','admin', 'A')
 		endereco = inserir_endereco('62823-111', 'Jaguaruana', 'Sitio Saquinho s/n')
 		endereco1 = inserir_endereco('62823-222', 'Jaguaruana', 'Sitio Saquinho s/n')
 		endereco2 = inserir_endereco('62823-000', 'Jaguaruana', 'Sitio Saquinho s/n')

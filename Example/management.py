@@ -1,5 +1,5 @@
 from TechApp import db, models
-from TechApp.models import *
+from TechApp.models import Usuario, Endereco, Emprestimo, Livro, Sessao
 
 
 def vincular_user_adress(user_id, adress_id):
@@ -23,23 +23,74 @@ def vincular_user_emprestimo(user_id, emprestimo_id):
 	else:
 		return None
 	
+def vincular_emprestimo_livro(emprestimo_id, livro_id):
+	emprestimo = Emprestimo.query.get(emprestimo_id)
+	livro = Livro.query.get(livro_id)
+	if emprestimo and livro is not None:
+		emprestimo.livros.append(livro) 
+		livro.emprestimos.append(emprestimo)
+		db.session.commit()
+		return emprestimo
+	else:
+		return None
+
+def vincular_livro_sessao(livro_id, sessao_id):
+	livro = Livro.query.get(livro_id)
+	sessao = Sessao.query.get(sessao_id)
+	if livro and sessao is not None:
+		livro.sessao_id = sessao.id
+		sessao.livros.append(livro)
+		db.session.commit()
+		return livro
+	else:
+		return None
 
 #CRUD ENTIDADE USUÁRIO
 def obter_usuarios():
-	return Usuario.query.all()
+	users = Usuario.query.all()
+	
+	lista_usuarios = list()
 
-def inserir_usuario(nome, telefone, email):
-	user = Usuario(nome, telefone, email)
+	if users is not None:
+		for item in users:
+			if item.endereco is not None:
+				lista_usuarios.append({'Id':item.id, 'Nome':item.nome, 'Telefone':item.telefone, 'Email':item.email, 'Senha':item.senha, 'Id_Endereço':item.endereco.id, 'Rua':item.endereco.rua, 'Cep':item.endereco.cep, 'Cidade':item.endereco.cidade, 'Tipo':item.tipo,})
+			else:
+				lista_usuarios.append({'Id':item.id, 'Nome':item.nome, 'Telefone':item.telefone, 'Email':item.email, 'Senha':item.senha, 'Tipo':item.tipo,})	
+
+		return lista_usuarios
+	else:
+		return None
+
+def obter_usuario(usuario_id):
+	user = Usuario.query.get(usuario_id)
+	if user is not None:
+		return user
+	else:
+		return None
+
+def validar_login(usuario_email, usuario_senha):
+	user = Usuario.query.filter(Usuario.email==usuario_email, Usuario.senha==usuario_senha).first()
+	if user is not None:
+		return ({'id':user.id, 'Email':user.email, 'Senha':user.senha, 'Nome':user.nome, 'Telefone':user.telefone, 'Tipo':user.tipo})
+	else:
+		return None
+
+
+def inserir_usuario(nome, telefone, email, senha, tipo):
+	user = Usuario(nome, telefone, email, senha, tipo)
 	db.session.add(user)
 	db.session.commit()
 	return user
 
-def atualizar_usuario(id, nome, telefone, email):
+def atualizar_usuario(id, nome, telefone, email, senha, tipo):
 	user = Usuario.query.get(id)
 	if user is not None:
 		user.nome = nome
 		user.telefone = telefone
 		user.email = email
+		user.senha = senha
+		user.tipo = tipo
 		db.session.commit()
 	else:
 		return None
@@ -50,7 +101,7 @@ def deletar_usuario(id):
 	if user is not None:
 		db.session.delete(user)
 		db.session.commit()
-		return True
+		return user
 	else:
 		return None
 

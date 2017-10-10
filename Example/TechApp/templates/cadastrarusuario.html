@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+{% block conteudo %}
+<hr>
+<div id="formularios" class="container box-info col-sm-12">
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissible" role="alert"> 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span ariahidden="true">x</span>
+        </button>
+        {{message}}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+  <div class="box-header with-border">
+    <h3 class="box-title">Cadastro de Usuário</h3>
+  </div>
+
+  <form class="form-horizontal" method="POST" action=" /cadastrarusuario ">
+    <div class="box-body">
+      
+      <div class="form-group">
+        <label for="inputnome" class="col-sm-2 control-label"><b>Nome:</b></label>
+        <div class="col-sm-12">
+          <input name="nome" type="text" class="form-control" id="inputnome" placeholder="Nome"  required autofocus> 
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputtelefone" class="col-sm-2 control-label"><b>Telefone:</b></label>
+        <div class="col-sm-12">
+          <input name="telefone" type="text" class="form-control" id="inputtelefone" placeholder="Telefone"  required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputemail" class="col-sm-2 control-label"><b>Email:</b></label>
+        <div class="col-sm-12">
+          <input name="email" type="email" class="form-control" id="inputemail" placeholder="Email"  required="required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="inputpassword" class="col-sm-2 control-label"><b>Senha:</b></label>
+        <div class="col-sm-12">
+          <input name="senha" type="password" class="form-control" id="inputpassword" placeholder="Senha"  required>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="inputrua" class="col-sm-2 control-label"><b>Rua:</b></label>
+        <div class="col-sm-12">
+          <input name="rua" type="text" class="form-control" id="inputrua" placeholder="Rua/Número"  required>
+        </div>
+      </div>      
+
+      <div class="form-group">
+        <label for="inputcep" class="col-sm-2 control-label"><b>Cep:</b></label>
+        <div class="col-sm-12">
+          <input name="cep" type="text" class="form-control" id="inputcep" placeholder="00.000-000"  required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputcidade" class="col-sm-2 control-label"><b>Cidade:</b></label>
+        <div class="col-sm-12">
+          <input name="cidade" type="text" class="form-control" id="inputcidade" placeholder="Cidade"  required>
+        </div>
+      </div>
+
+      <fieldset class="form-group">
+        <legend>Tipo de usuário:</legend>
+        
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="tipo" id="optionsRadios1" value="U"  required>
+              Usuário
+          </label>
+        </div>
+        
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="tipo" id="optionsRadios2" value="A"  required>
+              Administrador
+          </label>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="box">
+      <a href="{{url_for('homepage')}}"><button type="button" class=" btn btn-primary">Cancelar</button><a>
+      <button type="submit" class="btn btn-primary pull-right">Salvar</button>
+    </div>     
+    
+  
+  </form>
+</div>
+
+<hr>
+
+{% include 'listar.html' %}
+
+{% endblock %}

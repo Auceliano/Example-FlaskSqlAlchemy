@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block conteudo %}
+<hr>
+<div id="formularios" class="container box-info col-sm-12">
+  
+  <div class="box-header with-border">
+    <h3 class="box-title">Cadastro de Empréstimo</h3>
+  </div>
+
+  <form class="form-horizontal" method="POST" action="/cadusuario ">
+    <div class="box-body">
+      
+      <div class="form-group">
+        <label for="inputusuario" class="col-sm-2 control-label"><b>Usuário:</b></label>
+        <div class="col-sm-12">
+          <input name="usuario" type="text" class="form-control" id="inputusuario" placeholder="Nome"  required autofocus> 
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputtituloautor" class="col-sm-2 control-label"><b>Livro:</b></label>
+        <div class="col-sm-12">
+          <input name="tituloautor" type="text" class="form-control" id="inputtituloautor" placeholder="Título/Autor"  required> 
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputdataretirada" class="col-sm-2 control-label"><b>Data de Retirada:</b></label>
+        <div class="col-sm-12">
+          <input name="dataretirada" type="date" class="form-control" id="inputdataretirada" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputdatadevolucao" class="col-sm-2 control-label"><b>Data de Devolução:</b></label>
+        <div class="col-sm-12">
+          <input name="datadevolucao" type="date" class="form-control" id="inputdatadevolucao" required>
+        </div>
+      </div>
+
+    <div class="box">
+      <a href="{{url_for('homepage')}}"><button type="button" class=" btn btn-primary">Cancelar</button><a>
+      <button type="submit" class="btn btn-primary pull-right">Salvar</button>
+    </div>    
+  
+  </form>
+</div>
+
+<hr>
+
+{% endblock %}
