@@ -113,8 +113,7 @@ def inserir_endereco(cep, cidade, rua):
 	return adress
 
 def atualizar_endereco(id, cep, cidade, rua):
-	adress = Endereco.query.get(id)
-	
+	adress = Endereco.query.get(id)	
 	if adress is not None:
 		adress.cep = cep
 		adress.cidade = cidade

@@ -1,7 +1,8 @@
 from TechApp import app
 from flask import render_template, redirect, url_for, request, session, flash
 from management import inserir_usuario, inserir_endereco, vincular_user_adress,\
-obter_usuarios, deletar_usuario, validar_login
+obter_usuarios, obter_usuario, atualizar_usuario, atualizar_endereco,\
+deletar_usuario, validar_login
  
 
 
@@ -34,7 +35,7 @@ def logout():
 
 
 @app.route('/cadastrarusuario', methods=['GET', 'POST'])
-def cadastrarusuario():
+def cadastrarUsuario():
 	if 'usuario' in session and session['usuario']['Tipo'] == 'A':
 		if request.method == 'POST':
 			nome = request.form['nome']
@@ -58,7 +59,26 @@ def excluirUsuario(index):
 		user = deletar_usuario(index)
 		#deletar_endereco(user.endereco.id)
 		flash('Usuário removido com sucesso!')
-		return redirect(url_for('cadastrarusuario'))
+		return redirect(url_for('cadastrarUsuario'))
+	return redirect(url_for('homepage'))
+
+@app.route('/cadastrarusuario/alterar/<int:index>', methods=['GET', 'POST'])
+def alterarUsuario(index):
+	if 'usuario' in session and session['usuario']['Tipo'] == 'A':
+		if request.method == 'POST':
+			nome = request.form['nome']
+			telefone = request.form['telefone']
+			email = request.form['email']
+			senha = request.form['senha']
+			rua = request.form['rua']
+			cep = request.form['cep']
+			cidade = request.form['cidade']
+			tipo = request.form['tipo']
+			atualizar_usuario(index, nome, telefone, email, senha, tipo)
+			atualizar_endereco(index, cep, cidade, rua)
+			flash('Usuário atualizado com sucesso!')
+			return redirect(url_for('cadastrarUsuario'))
+		return render_template('cadastrarusuario.html', usuario = session['usuario'], lista_usuarios = obter_usuarios(), userUpdate = obter_usuario(index), index = index, Alterar = 'alterarUsuario', Excluir = 'excluirUsuario')
 	return redirect(url_for('homepage'))
 
 @app.route('/cadastrarlivro')

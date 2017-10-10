@@ -17,58 +17,62 @@
 {% endwith %}
 
   <div class="box-header with-border">
+  {% if userUpdate: %}
+    <h3 class="box-title">Alterar Usuário</h3>
+  {% else %}
     <h3 class="box-title">Cadastro de Usuário</h3>
+  {% endif %}
   </div>
 
-  <form class="form-horizontal" method="POST" action=" /cadastrarusuario ">
+  <form class="form-horizontal" method="POST" action="{% if userUpdate: %} {{url_for('alterarUsuario', index=index)}} {% else %} {{url_for('cadastrarUsuario')}} {% endif %}">
     <div class="box-body">
       
       <div class="form-group">
         <label for="inputnome" class="col-sm-2 control-label"><b>Nome:</b></label>
         <div class="col-sm-12">
-          <input name="nome" type="text" class="form-control" id="inputnome" placeholder="Nome"  required autofocus> 
+          <input name="nome" type="text" class="form-control" id="inputnome" placeholder="Nome" {%if userUpdate:%} value="{{userUpdate.nome}}" {%endif%} required autofocus> 
         </div>
       </div>
 
       <div class="form-group">
         <label for="inputtelefone" class="col-sm-2 control-label"><b>Telefone:</b></label>
         <div class="col-sm-12">
-          <input name="telefone" type="text" class="form-control" id="inputtelefone" placeholder="Telefone"  required>
+          <input name="telefone" type="text" class="form-control" id="inputtelefone" placeholder="Telefone" {%if userUpdate:%} value="{{userUpdate.telefone}}" {%endif%}  required>
         </div>
       </div>
 
       <div class="form-group">
         <label for="inputemail" class="col-sm-2 control-label"><b>Email:</b></label>
         <div class="col-sm-12">
-          <input name="email" type="email" class="form-control" id="inputemail" placeholder="Email"  required="required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+          <input name="email" type="email" class="form-control" id="inputemail" placeholder="Email" {%if userUpdate:%} value="{{userUpdate.email}}" {%endif%}  required="required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
         </div>
       </div>
       
       <div class="form-group">
         <label for="inputpassword" class="col-sm-2 control-label"><b>Senha:</b></label>
         <div class="col-sm-12">
-          <input name="senha" type="password" class="form-control" id="inputpassword" placeholder="Senha"  required>
+          <input name="senha" type="password" class="form-control" id="inputpassword" placeholder="Senha" {%if userUpdate:%} value="{{userUpdate.senha}}" {%endif%} required>
         </div>
       </div>
       
       <div class="form-group">
         <label for="inputrua" class="col-sm-2 control-label"><b>Rua:</b></label>
         <div class="col-sm-12">
-          <input name="rua" type="text" class="form-control" id="inputrua" placeholder="Rua/Número"  required>
+          <input name="rua" type="text" class="form-control" id="inputrua" placeholder="Rua/Número" {%if userUpdate:%} value="{{userUpdate.endereco.rua}}" {%endif%} required>
         </div>
       </div>      
 
       <div class="form-group">
         <label for="inputcep" class="col-sm-2 control-label"><b>Cep:</b></label>
         <div class="col-sm-12">
-          <input name="cep" type="text" class="form-control" id="inputcep" placeholder="00.000-000"  required>
+          <input name="cep" type="text" class="form-control" id="inputcep" placeholder="00.000-000" {%if userUpdate:%} value="{{userUpdate.endereco.cep}}" {%endif%} required>
         </div>
       </div>
 
       <div class="form-group">
         <label for="inputcidade" class="col-sm-2 control-label"><b>Cidade:</b></label>
         <div class="col-sm-12">
-          <input name="cidade" type="text" class="form-control" id="inputcidade" placeholder="Cidade"  required>
+          <input name="cidade" type="text" class="form-control" id="inputcidade" placeholder="Cidade" {%if userUpdate:%} value="{{userUpdate.endereco.cidade}}" {%endif%} required>
         </div>
       </div>
 
@@ -77,14 +81,14 @@
         
         <div class="form-check">
           <label class="form-check-label">
-            <input type="radio" class="form-check-input" name="tipo" id="optionsRadios1" value="U"  required>
+            <input type="radio" class="form-check-input" name="tipo" id="optionsRadios1" value="U" {% if userUpdate and userUpdate.tipo == 'U': %} {{'checked'}} {% endif %} required>
               Usuário
           </label>
         </div>
         
         <div class="form-check">
           <label class="form-check-label">
-            <input type="radio" class="form-check-input" name="tipo" id="optionsRadios2" value="A"  required>
+            <input type="radio" class="form-check-input" name="tipo" id="optionsRadios2" value="A" {% if userUpdate and userUpdate.tipo == 'A': %} {{'checked'}} {% endif %} required>
               Administrador
           </label>
         </div>

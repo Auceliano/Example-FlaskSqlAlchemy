@@ -29,7 +29,7 @@
               {% endfor %}
               <!--{% if not Operacao: %}-->
               <td>
-                <a href='#'><button type="button" class="btn btn-warning btn-sm">Alterar</button></a>
+                <a href="{{url_for(Alterar, index=l.Id)}}"><button type="button" class="btn btn-warning btn-sm">Alterar</button></a>
               </td>
               <!--{% endif %}-->
               <td>
