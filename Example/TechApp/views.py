@@ -2,7 +2,9 @@ from TechApp import app
 from flask import render_template, redirect, url_for, request, session, flash
 from management import inserir_usuario, inserir_endereco, vincular_user_adress,\
 obter_usuarios, obter_usuario, atualizar_usuario, atualizar_endereco,\
-deletar_usuario, validar_login
+deletar_usuario, validar_login, obter_livros, obter_livro, inserir_livro,\
+inserir_sessao, vincular_livro_sessao, deletar_livro, deletar_sessao, obter_sessao,\
+atualizar_livro, atualizar_sessao
  
 
 
@@ -81,10 +83,45 @@ def alterarUsuario(index):
 		return render_template('cadastrarusuario.html', usuario = session['usuario'], lista_usuarios = obter_usuarios(), userUpdate = obter_usuario(index), index = index, Alterar = 'alterarUsuario', Excluir = 'excluirUsuario')
 	return redirect(url_for('homepage'))
 
-@app.route('/cadastrarlivro')
-def cadastrarlivro():
-	if 'usuario' in session:
-		return render_template('cadastrarlivro.html', usuario = session['usuario'])
+@app.route('/cadastrarlivro/alterar/<int:index>', methods=['GET', 'POST'])
+def alterarLivro(index):
+	if 'usuario' in session and session['usuario']['Tipo'] == 'A':
+		if request.method == 'POST':
+			titulo = request.form['titulo']
+			autor = request.form['autor']
+			localizacao = request.form['localizacao']
+			descricao = request.form['descricao']
+			atualizar_livro(index, titulo, autor)
+			atualizar_sessao(index, localizacao, descricao)
+			flash('Livro atualizado com sucesso!')
+			return redirect(url_for('cadastrarLivro'))
+		return render_template('cadastrarlivro.html', usuario = session['usuario'], lista_usuarios = obter_livros(), userUpdate = obter_sessao(index), index = index, Alterar = 'alterarLivro', Excluir = 'excluirLivro')
+	return redirect(url_for('homepage'))
+
+@app.route('/cadastrarlivro/excluir/<int:index>')
+def excluirLivro(index):
+	if 'usuario' in session and session['usuario']['Tipo'] == 'A':
+		livro = deletar_livro(index)
+		sessao = deletar_sessao(index)
+		#deletar_endereco(user.endereco.id)
+		flash('Livro removido com sucesso!')
+		return redirect(url_for('cadastrarLivro'))
+	return redirect(url_for('homepage'))
+
+
+@app.route('/cadastrarlivro', methods=['GET', 'POST'])
+def cadastrarLivro():
+	if 'usuario' in session and session['usuario']['Tipo'] == 'A':
+		if request.method == 'POST':
+			titulo = request.form['titulo']
+			autor = request.form['autor']
+			localizacao = request.form['localizacao']
+			descricao = request.form['descricao']
+			livro = inserir_livro(titulo, autor)
+			sessao = inserir_sessao(localizacao, descricao)
+			vincular_livro_sessao(livro.id,sessao.id)
+			flash('Livro cadastrado com sucesso!')
+		return render_template('cadastrarlivro.html', usuario = session['usuario'], lista_usuarios = obter_livros(), Alterar = 'alterarLivro', Excluir = 'excluirLivro')
 	return redirect(url_for('homepage'))
 
 @app.route('/cadastraremprestimo')

@@ -208,6 +208,16 @@ def obter_livro(id):
 	else:
 		return None
 
+def obter_livros():
+	livros = Livro.query.all()
+	lista_livros = list()
+	if livros is not None:
+		for item in livros:
+			lista_livros.append({'Id':item.id, 'Título':item.titulo, 'Autor':item.autor, 'Sessão_id':item.sessao_id, 'Localização':obter_sessao(item.sessao_id).localizacao, 'Descricao': obter_sessao(item.sessao_id).descricao})
+		return lista_livros
+	else:
+		return None
+
 #CRUD ENTIDADE EMPRESTIMO
 def inserir_emprestimo(data_emprestimo, data_devolucao):
 	emprestimo = Emprestimo(data_emprestimo, data_devolucao)
