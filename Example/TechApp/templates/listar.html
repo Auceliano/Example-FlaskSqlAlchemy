@@ -10,7 +10,7 @@
         <table class="table table-hover">
           <tbody>
             <tr>
-            {% for l in lista_usuarios if not lista_usuarios.hidden: %}
+            {% for l in lista if not lista.hidden: %}
               {% if loop.first: %}
                 {% for c in l.keys(): %}
               <th>{{c}}</th>
@@ -22,7 +22,7 @@
               {% endif %} 
             {% endfor %}
             </tr>
-            {% for l in lista_usuarios if not lista_usuarios.hidden: %}
+            {% for l in lista if not lista.hidden: %}
             <tr>
               {% for c in l.keys(): %}
               <td>{{l[c]}}</td>

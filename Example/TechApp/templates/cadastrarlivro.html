@@ -3,41 +3,32 @@
 <hr>
 <div id="formularios" class="container box-info col-sm-12">
 
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    {% for message in messages %}
-      <div class="alert alert-success alert-dismissible" role="alert"> 
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span ariahidden="true">x</span>
-        </button>
-        {{message}}
-      </div>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
+
+{% include 'flashMessages.html' %}
+
 
   <div class="box-header with-border">
-  {% if userUpdate: %}
+  {% if Update: %}
     <h3 class="box-title">Alterar Livro</h3>
   {% else %}
     <h3 class="box-title">Cadastro de Livro</h3>
   {% endif %}
   </div>
 
-  <form class="form-horizontal" method="POST" action="{% if userUpdate: %} {{url_for('alterarLivro', index=index)}} {% else %} {{url_for('cadastrarLivro')}} {% endif %}" >
+  <form class="form-horizontal" method="POST" action="{% if Update: %} {{url_for('alterarLivro', index=index)}} {% else %} {{url_for('cadastrarLivro')}} {% endif %}" >
     <div class="box-body">
       
       <div class="form-group">
         <label for="inputtitulo" class="col-sm-2 control-label"><b>Título:</b></label>
         <div class="col-sm-12">
-          <input name="titulo" type="text" class="form-control" id="inputtitulo" placeholder="Título" {%if userUpdate:%} value="{{userUpdate.livros[0].titulo}}" {%endif%}  required autofocus> 
+          <input name="titulo" type="text" class="form-control" id="inputtitulo" placeholder="Título" {%if Update:%} value="{{Update.livros[0].titulo}}" {%endif%}  required autofocus> 
         </div>
       </div>
 
       <div class="form-group">
         <label for="inputautor" class="col-sm-2 control-label"><b>Autor:</b></label>
         <div class="col-sm-12">
-          <input name="autor" type="text" class="form-control" id="inputautor" placeholder="Autor" {%if userUpdate:%} value="{{userUpdate.livros[0].autor}}" {%endif%} required>
+          <input name="autor" type="text" class="form-control" id="inputautor" placeholder="Autor" {%if Update:%} value="{{Update.livros[0].autor}}" {%endif%} required>
         </div>
       </div>
 
@@ -46,14 +37,14 @@
       <div class="form-group">
         <label for="inputlocalizacao" class="col-sm-2 control-label"><b>Localização:</b></label>
         <div class="col-sm-12">
-          <input name="localizacao" type="text" class="form-control" id="inputlocalizacao" placeholder="Estante A" {%if userUpdate:%} value="{{userUpdate.localizacao}}" {%endif%} required>
+          <input name="localizacao" type="text" class="form-control" id="inputlocalizacao" placeholder="Estante A" {%if Update:%} value="{{Update.localizacao}}" {%endif%} required>
         </div>
       </div>
 
       <div class="form-group">
         <label for="inputdescricao" class="col-sm-2 control-label"><b>Descrição:</b></label>
         <div class="col-sm-12">
-          <input name="descricao" type="text" class="form-control" id="inputdescricao" placeholder="Ciência da Computação" {%if userUpdate:%} value="{{userUpdate.descricao}}" {%endif%} required>
+          <input name="descricao" type="text" class="form-control" id="inputdescricao" placeholder="Ciência da Computação" {%if Update:%} value="{{Update.descricao}}" {%endif%} required>
         </div>
       </div>
 

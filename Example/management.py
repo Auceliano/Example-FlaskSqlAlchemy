@@ -213,7 +213,7 @@ def obter_livros():
 	lista_livros = list()
 	if livros is not None:
 		for item in livros:
-			lista_livros.append({'Id':item.id, 'Título':item.titulo, 'Autor':item.autor, 'Sessão_id':item.sessao_id, 'Localização':obter_sessao(item.sessao_id).localizacao, 'Descricao': obter_sessao(item.sessao_id).descricao})
+			lista_livros.append({'Id':item.id, 'Título':item.titulo, 'Autor':item.autor, 'Sessão_id':item.sessao_id, 'Localização':obter_sessao(item.sessao_id).localizacao, 'Descricão': obter_sessao(item.sessao_id).descricao})
 		return lista_livros
 	else:
 		return None

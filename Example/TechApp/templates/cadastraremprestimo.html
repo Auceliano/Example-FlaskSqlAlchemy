@@ -2,6 +2,10 @@
 {% block conteudo %}
 <hr>
 <div id="formularios" class="container box-info col-sm-12">
+
+
+{% include 'flashMessages.html' %}
+
   
   <div class="box-header with-border">
     <h3 class="box-title">Cadastro de Empréstimo</h3>
@@ -13,7 +17,7 @@
       <div class="form-group">
         <label for="inputusuario" class="col-sm-2 control-label"><b>Usuário:</b></label>
         <div class="col-sm-12">
-          <input name="usuario" type="text" class="form-control" id="inputusuario" placeholder="Nome"  required autofocus> 
+          <input name="usuario" type="text" class="form-control" id="inputusuario" placeholder="Nome" required autofocus> 
         </div>
       </div>
 

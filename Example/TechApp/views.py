@@ -52,7 +52,7 @@ def cadastrarUsuario():
 			endereco = inserir_endereco(cep, cidade, rua)
 			vincular_user_adress(user.id, endereco.id)
 			flash('Usuário cadastrado com sucesso!')
-		return render_template('cadastrarusuario.html', usuario = session['usuario'], lista_usuarios = obter_usuarios(), Alterar = 'alterarUsuario', Excluir = 'excluirUsuario')
+		return render_template('cadastrarusuario.html', usuario = session['usuario'], lista = obter_usuarios(), Alterar = 'alterarUsuario', Excluir = 'excluirUsuario')
 	return redirect(url_for('homepage'))
 
 @app.route('/cadastrarusuario/excluir/<int:index>')
@@ -80,7 +80,7 @@ def alterarUsuario(index):
 			atualizar_endereco(index, cep, cidade, rua)
 			flash('Usuário atualizado com sucesso!')
 			return redirect(url_for('cadastrarUsuario'))
-		return render_template('cadastrarusuario.html', usuario = session['usuario'], lista_usuarios = obter_usuarios(), userUpdate = obter_usuario(index), index = index, Alterar = 'alterarUsuario', Excluir = 'excluirUsuario')
+		return render_template('cadastrarusuario.html', usuario = session['usuario'], lista = obter_usuarios(), Update = obter_usuario(index), index = index, Alterar = 'alterarUsuario', Excluir = 'excluirUsuario')
 	return redirect(url_for('homepage'))
 
 @app.route('/cadastrarlivro/alterar/<int:index>', methods=['GET', 'POST'])
@@ -95,7 +95,7 @@ def alterarLivro(index):
 			atualizar_sessao(index, localizacao, descricao)
 			flash('Livro atualizado com sucesso!')
 			return redirect(url_for('cadastrarLivro'))
-		return render_template('cadastrarlivro.html', usuario = session['usuario'], lista_usuarios = obter_livros(), userUpdate = obter_sessao(index), index = index, Alterar = 'alterarLivro', Excluir = 'excluirLivro')
+		return render_template('cadastrarlivro.html', usuario = session['usuario'], lista = obter_livros(), Update = obter_sessao(index), index = index, Alterar = 'alterarLivro', Excluir = 'excluirLivro')
 	return redirect(url_for('homepage'))
 
 @app.route('/cadastrarlivro/excluir/<int:index>')
@@ -121,7 +121,7 @@ def cadastrarLivro():
 			sessao = inserir_sessao(localizacao, descricao)
 			vincular_livro_sessao(livro.id,sessao.id)
 			flash('Livro cadastrado com sucesso!')
-		return render_template('cadastrarlivro.html', usuario = session['usuario'], lista_usuarios = obter_livros(), Alterar = 'alterarLivro', Excluir = 'excluirLivro')
+		return render_template('cadastrarlivro.html', usuario = session['usuario'], lista = obter_livros(), Alterar = 'alterarLivro', Excluir = 'excluirLivro')
 	return redirect(url_for('homepage'))
 
 @app.route('/cadastraremprestimo')
