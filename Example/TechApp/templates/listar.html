@@ -10,30 +10,26 @@
         <table class="table table-hover">
           <tbody>
             <tr>
-            {% for l in lista if not lista.hidden: %}
+            {% for item in lista if not lista.hidden: %}
               {% if loop.first: %}
-                {% for c in l.keys(): %}
-              <th>{{c}}</th>
+                {% for chave in item.keys(): %}
+              <th>{{chave}}</th>
                 {% endfor %}
-                <!--{% if not Operacao: %}-->
               <th>Alterar</th>
-                <!--{% endif %}-->
               <th>Excluir</th>
               {% endif %} 
             {% endfor %}
             </tr>
-            {% for l in lista if not lista.hidden: %}
+            {% for item in lista if not lista.hidden: %}
             <tr>
-              {% for c in l.keys(): %}
-              <td>{{l[c]}}</td>
-              {% endfor %}
-              <!--{% if not Operacao: %}-->
+              {% for chave in item.keys(): %}
+              <td>{{item[chave]}}</td>
+              {% endfor %}              
               <td>
-                <a href="{{url_for(Alterar, index=l.Id)}}"><button type="button" class="btn btn-warning btn-sm">Alterar</button></a>
-              </td>
-              <!--{% endif %}-->
+                <a href="{{url_for(Alterar, index=item.Id)}}"><button type="button" class="btn btn-warning btn-sm">Alterar</button></a>
+              </td>              
               <td>
-                <a href="{{url_for(Excluir, index=l.Id)}}"><button type="button" class="btn btn-danger btn-sm">Excluir</button></a>
+                <a href="{{url_for(Excluir, index=item.Id)}}"><button type="button" class="btn btn-danger btn-sm">Excluir</button></a>
               </td>
               </tr>  
             {% endfor %}

@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = 'Something unique and secret!'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dbtech.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////dbtech.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True 
 
 db = SQLAlchemy(app)

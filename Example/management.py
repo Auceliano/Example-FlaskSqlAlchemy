@@ -1,5 +1,6 @@
 from TechApp import db, models
 from TechApp.models import Usuario, Endereco, Emprestimo, Livro, Sessao
+from datetime import date
 
 
 def vincular_user_adress(user_id, adress_id):
@@ -219,17 +220,20 @@ def obter_livros():
 		return None
 
 #CRUD ENTIDADE EMPRESTIMO
-def inserir_emprestimo(data_emprestimo, data_devolucao):
-	emprestimo = Emprestimo(data_emprestimo, data_devolucao)
+def inserir_emprestimo(data_emprestimo, data_devolucao, id_usuario, livro):
+	emprestimo = Emprestimo(date(*[int(x) for x in data_emprestimo.split('-')]), date(*[int(x) for x in data_devolucao.split('-')]), id_usuario, obter_livro(livro))
 	db.session.add(emprestimo)
 	db.session.commit()
 	return emprestimo
 
-def atualizar_emprestimo(id, data_emprestimo, data_devolucao):
+def atualizar_emprestimo(id, data_emprestimo, data_devolucao, usuario, livro):
 	emprestimo = Emprestimo.query.get(id)
 	if emprestimo is not None:
-		emprestimo.data_emprestimo = data_emprestimo
-		emprestimo.data_devolucao = data_devolucao
+		emprestimo.id_usuario = id
+		emprestimo.livros.pop()
+		emprestimo.livros.append(obter_livro(livro))
+		emprestimo.data_emprestimo = date(*[int(x) for x in data_emprestimo.split('-')])
+		emprestimo.data_devolucao = date(*[int(x) for x in data_devolucao.split('-')])
 		db.session.commit()
 		return emprestimo
 	else:
@@ -248,5 +252,15 @@ def obter_emprestimo(id):
 	emprestimo = Emprestimo.query.get(id)
 	if emprestimo is not None:
 		return emprestimo
+	else:
+		return None
+
+def obter_emprestimos():
+	emprestimos = Emprestimo.query.all()
+	lista_emprestimos = list()
+	if emprestimos is not None:
+		for item in emprestimos:
+			lista_emprestimos.append({'Id':item.id, 'Usuário':obter_usuario(item.id_usuario).nome, 'Id_User':item.id_usuario, 'Livros':item.livros[0].titulo, 'Data de Emprestimo':item.data_emprestimo, 'Data de Devolução':item.data_devolucao})
+		return lista_emprestimos
 	else:
 		return None

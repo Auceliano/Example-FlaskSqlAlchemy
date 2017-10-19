@@ -8,37 +8,57 @@
 
   
   <div class="box-header with-border">
+  {% if Update: %}
+    <h3 class="box-title">Alterar Empréstimo</h3>
+  {% else %}
     <h3 class="box-title">Cadastro de Empréstimo</h3>
+  {% endif %}    
   </div>
 
-  <form class="form-horizontal" method="POST" action="/cadusuario ">
+  <form class="form-horizontal" method="POST" action="{% if Update: %} {{url_for('alterarEmprestimo', index=index)}} {% else %} {{url_for('cadastrarEmprestimo')}} {% endif %}">
     <div class="box-body">
       
       <div class="form-group">
         <label for="inputusuario" class="col-sm-2 control-label"><b>Usuário:</b></label>
         <div class="col-sm-12">
-          <input name="usuario" type="text" class="form-control" id="inputusuario" placeholder="Nome" required autofocus> 
+          <select name="usuario" class="form-control" id="selectusuario" required>
+            {% for user in users if not users.hidden: %}
+            <option {%if Update: %}
+                      {%if Update.id_usuario == user.Id:%} selected {%endif%}
+                    {%endif%} value = "{{user.Id}}">{{user.Nome}}</option>
+            {% endfor %}
+          </select>
+         <!-- <input name="usuario" type="text" class="form-control" id="inputusuario" placeholder="Nome" required autofocus> -->
         </div>
       </div>
 
       <div class="form-group">
         <label for="inputtituloautor" class="col-sm-2 control-label"><b>Livro:</b></label>
         <div class="col-sm-12">
-          <input name="tituloautor" type="text" class="form-control" id="inputtituloautor" placeholder="Título/Autor"  required> 
+          <select name="livro" class="form-control" id="selectusuario" required>
+            {% for book in books if not   books.hidden: %}
+            <option {%if Update: %}
+                      {%if Update.livros[0].id == book.Id:%} selected {%endif%}
+                    {%endif%} value = "{{book.Id}}">{{book.Título}}</option>
+            {% endfor %}
+          </select>
+          <!--<input name="tituloautor" type="text" class="form-control" id="inputtituloautor" placeholder="Título/Autor"  required> -->
         </div>
       </div>
 
       <div class="form-group">
         <label for="inputdataretirada" class="col-sm-2 control-label"><b>Data de Retirada:</b></label>
         <div class="col-sm-12">
-          <input name="dataretirada" type="date" class="form-control" id="inputdataretirada" required>
+          <input name="dataretirada" type="date" class="form-control" id="inputdataretirada"
+          {%if Update: %} value = "{{Update.data_emprestimo}}" {%endif%} required>
         </div>
       </div>
 
       <div class="form-group">
         <label for="inputdatadevolucao" class="col-sm-2 control-label"><b>Data de Devolução:</b></label>
         <div class="col-sm-12">
-          <input name="datadevolucao" type="date" class="form-control" id="inputdatadevolucao" required>
+          <input name="datadevolucao" type="date" class="form-control" id="inputdatadevolucao"
+          {%if Update: %} value = "{{Update.data_devolucao}}" {%endif%} required>
         </div>
       </div>
 
@@ -51,5 +71,7 @@
 </div>
 
 <hr>
+
+{% include 'listar.html' %}
 
 {% endblock %}

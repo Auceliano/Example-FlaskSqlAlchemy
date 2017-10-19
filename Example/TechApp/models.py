@@ -39,7 +39,8 @@ class Usuario(db.Model):
         self.email = email
         self.senha = senha
         self.tipo = tipo
-        #self.id_endereco = id_endereco
+    def __repr__(self):
+        return '{}'.format(self.nome)
 
 
 class Endereco(db.Model):
@@ -70,8 +71,8 @@ livro_emprestimo = db.Table('livro_emprestimo',
 class Emprestimo(db.Model):
     """Entidade Empréstimo"""
     id = db.Column(db.Integer, primary_key=True)
-    data_emprestimo = db.Column(db.DateTime)
-    data_devolucao = db.Column(db.DateTime)
+    data_emprestimo = db.Column(db.Date)
+    data_devolucao = db.Column(db.Date)
     id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id'))
     livros = db.relationship(
         'Livro',
@@ -80,9 +81,12 @@ class Emprestimo(db.Model):
         'emprestimo',
         lazy='dynamic'))
     
-    def __init__(self, data_emprestimo, data_devolucao):
+    def __init__(self, data_emprestimo, data_devolucao, id_usuario, livro):
         self.data_emprestimo = data_emprestimo
         self.data_devolucao = data_devolucao
+        self.id_usuario = id_usuario
+        self.livros.append(livro)
+
     def __repr__(self):
         return '{} ({})'.format(self.data_emprestimo, self.id_usuario)
 

@@ -4,7 +4,8 @@ from management import inserir_usuario, inserir_endereco, vincular_user_adress,\
 obter_usuarios, obter_usuario, atualizar_usuario, atualizar_endereco,\
 deletar_usuario, validar_login, obter_livros, obter_livro, inserir_livro,\
 inserir_sessao, vincular_livro_sessao, deletar_livro, deletar_sessao, obter_sessao,\
-atualizar_livro, atualizar_sessao
+atualizar_livro, atualizar_sessao, obter_emprestimos, inserir_emprestimo,\
+obter_emprestimo, atualizar_emprestimo, deletar_emprestimo
  
 
 
@@ -124,10 +125,39 @@ def cadastrarLivro():
 		return render_template('cadastrarlivro.html', usuario = session['usuario'], lista = obter_livros(), Alterar = 'alterarLivro', Excluir = 'excluirLivro')
 	return redirect(url_for('homepage'))
 
-@app.route('/cadastraremprestimo')
-def cadastraremprestimo():
+@app.route('/cadastraremprestimo', methods=['GET', 'POST'])
+def cadastrarEmprestimo():
 	if 'usuario' in session:
-		return render_template('cadastraremprestimo.html', usuario = session['usuario'])
+		if request.method == 'POST':
+			usuario = request.form['usuario'] 
+			livro = request.form['livro'] 
+			dataretirada = request.form['dataretirada']
+			datadevolucao = request.form['datadevolucao'] 
+			emprestmo = inserir_emprestimo(dataretirada, datadevolucao, usuario, livro)
+			flash('Emprestimo cadastrado com sucesso!')
+		return render_template('cadastraremprestimo.html', usuario = session['usuario'], lista = obter_emprestimos(), users = obter_usuarios(), books = obter_livros(), Alterar = 'alterarEmprestimo', Excluir = 'excluirEmprestimo')
+	return redirect(url_for('homepage'))
+
+@app.route('/cadastraremprestimo/excluir/<int:index>')
+def excluirEmprestimo(index):
+	if 'usuario' in session and session['usuario']['Tipo'] == 'A':
+		emprestmo = deletar_emprestimo(index)
+		flash('Emprestimo removido com sucesso!')
+		return redirect(url_for('cadastrarEmprestimo'))
+	return redirect(url_for('homepage'))
+
+@app.route('/cadastraremprestimo/alterar/<int:index>', methods=['GET', 'POST'])
+def alterarEmprestimo(index):
+	if 'usuario' in session and session['usuario']['Tipo'] == 'A':
+		if request.method == 'POST':
+			usuario = request.form['usuario'] 
+			livro = request.form['livro'] 
+			dataretirada = request.form['dataretirada']
+			datadevolucao = request.form['datadevolucao'] 
+			atualizar_emprestimo(index, dataretirada, datadevolucao, usuario, livro)
+			flash('Empréstimo atualizado com sucesso!')
+			return redirect(url_for('cadastrarEmprestimo'))
+		return render_template('cadastraremprestimo.html', usuario = session['usuario'], lista = obter_emprestimos(), Update = obter_emprestimo(index), index = index, users = obter_usuarios(), books = obter_livros(), Alterar = 'alterarEmprestimo', Excluir = 'excluirEmprestimo')
 	return redirect(url_for('homepage'))
 
 @app.route('/about')
